@@ -101,3 +101,20 @@ USE_I18N = True
 
 USE_TZ = True
 ```
+
+### Data type
+| TYPE            | DESCRIPNION                           | PAREMRTRS                                       |
+|                 |                                       | unique - поле должно быть уникальным            |
+|                 |                                       | help_text - текст подсказки для поля в админке  |
+| CharField       | поле для хранения строк               | max_length=150                                  |
+|                 |                                       | verbose_name='Имя' - читаемое имя поля          |
+| IntegerField    | хранения целых чисел                  |                                                 |
+| BooleanField    | хранения булевых значений             | default=True                                    |
+| TextField       | хранения больших текстов              | null=True - может ли поле быть NULL             |
+|                 |                                       | blank=True - может ли поле быть пустым в формах |
+| DateTimeField   | хранения даты и времени               |                                                 |
+| ImageField      | информация о загруженных изображениях |                                                 |
+| ForeignKey      | поле для создания внешнего ключа      | on_delete=                                      |
+|                 | на другую модель (один ко многим)     |                                                 |
+| OneToOneField   | создания связи «один к одному»        | on_delete=                                      |
+| EmailField      |                                       |                                                 |
