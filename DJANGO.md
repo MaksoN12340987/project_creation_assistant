@@ -37,6 +37,14 @@ pip freeze > requirements.txt
 django-admin startproject config .
 ```
 
+
+#### Для создания нового приложения в проекте Django используйте команду:
+```
+python manage.py startapp app_name
+```
+
+
+
 #### Запуск сервера разработки
 Django предоставляет встроенный сервер разработки, который позволяет вам тестировать ваше приложение локально. Запуск сервера разработки происходит с помощью команды 
 runserver:
@@ -53,3 +61,43 @@ python manage.py runserver
 Модели данных - models.py
 Тестирование - tests.py
 Контроллеры - views.py
+
+
+#### Не забудте создать urls.py в проекте и связать пути через "include"
+```
+from django.urls import path
+from . import views
+from catalog.apps import AppConfig
+
+
+app_name = AppConfig.name
+
+urlpatterns = [
+    path('home/', views.about, name='home'),
+    path(f'{AppConfig.name}/', views.contact, name=f'{AppConfig.name}')
+]
+```
+
+
+
+#### Добавить в config/settings.py приложение в константе INSTALLED_APPS
+И также добавить:
+```
+STATIC_URL = '/static/'
+```
+```
+MEDIA_URL = '/media/'
+
+MEDIA_ROOT = BASE_DIR / 'media'
+```
+```
+LANGUAGE_CODE = "en-us"
+
+TIME_ZONE = "UTC"
+
+USE_L10N = True
+
+USE_I18N = True
+
+USE_TZ = True
+```
