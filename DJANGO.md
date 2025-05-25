@@ -118,3 +118,57 @@ USE_TZ = True
 |                 | на другую модель (один ко многим)     |                                                 |
 | OneToOneField   | создания связи «один к одному»        | on_delete=                                      |
 | EmailField      |                                       |                                                 |
+
+```
+    first_name = models.CharField(max_length=150, verbose_name='Имя')
+    last_name = models.CharField(max_length=150, verbose_name='Фамилия')
+    
+    age = models.IntegerField( help_text="Введите возвраст")
+    is_activ = models.BooleanField(default=True)
+    descripyion = models.TextField(null=True, blank=True)\
+        # null — определяет, может ли поле принимать значение NULL
+        # blank — определяет, может ли поле быть пустым в формах. Полезно для валидации данных.
+    create_at = models.DateTimeField(auto_now_add=True)
+    
+    image = models.ImageField(upload_to='photos/', verbose_name='Фотография')
+    
+    # Зависимость данных один ко многим
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    
+    # Один к одному
+    profils = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    
+    # Многие ко многим
+    tags = models.ManyToManyField(Tag)
+    
+    STATUS_CHOICES = [
+        ('draft', 'Draft')
+        ('published', 'Published')
+    ]
+    status = models.CharField()
+```
+
+
+## Migrations
+
+#### Create file migrations
+
+```
+python manage.py makemigrations
+```
+=> 0001_initial.py
+
+#### Применить миграцию
+```
+python manage.py migrate
+```
+
+#### Откатить миграцию
+```
+python manage.py migrate app_name 0001
+```
+
+#### Вернуть в исходное состояние, отменить все миграции
+```
+python manage.py migrate app_name zero
+```
