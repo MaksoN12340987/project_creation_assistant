@@ -114,9 +114,9 @@ USE_TZ = True
 |                 |                                       | blank=True - может ли поле быть пустым в формах |
 | DateTimeField   | хранения даты и времени               |                                                 |
 | ImageField      | информация о загруженных изображениях |                                                 |
-| ForeignKey      | поле для создания внешнего ключа      | on_delete=                                      |
+| ForeignKey      | поле для создания внешнего ключа      | on_delete                                       |
 |                 | на другую модель (один ко многим)     |                                                 |
-| OneToOneField   | создания связи «один к одному»        | on_delete=                                      |
+| OneToOneField   | создания связи «один к одному»        |                                                 |
 | EmailField      |                                       |                                                 |
 
 ```
@@ -172,3 +172,35 @@ python manage.py migrate app_name 0001
 ```
 python manage.py migrate app_name zero
 ```
+
+
+## Django shell
+#### IPython
+Это улучшенная интерактивная оболочка для Python, которая предоставляет более удобный интерфейс, автодополнение, синтаксическую подсветку и другие полезные функции.
+
+Чтобы использовать IPython в Django shell, установите IPython:
+```
+poetry add ipython
+```
+После установки запустите Django shell с IPython:
+```
+python manage.py shell -i ipython
+```
+
+## Чтение данных
+```
+students = Student.objects.all()
+```
+
+
+## Заполнение данными
+#### Создание json файла для простого заполнения данными БД
+```
+python -Xutf8 manage.py dumpdata [app_label].[model_name] --output file.json --indent 4
+```
+#### Заполнение с использованием json
+```
+
+```
+
+
