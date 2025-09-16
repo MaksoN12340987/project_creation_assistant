@@ -85,6 +85,28 @@ urlpatterns = [
 ```
 STATIC_URL = '/static/'
 ```
+
+Настройки для 
+```
+
+```
+
+Настройки для подтягивания из .env
+```
+SECRET_KEY = os.getenv("SECRET_KEY")
+DEBUG = True if os.getenv("DEBUG") == "True" else False
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
+EMAIL_HOST = os.getenv("EMAIL_HOST", default="smtp.yandex.ru")
+EMAIL_PORT = os.getenv("EMAIL_PORT", default="465")
+EMAIL_USE_TLS = True if os.getenv("EMAIL_USE_TLS") == "True" else False
+EMAIL_USE_SSL = True if os.getenv("EMAIL_USE_SSL") == "True" else False
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", default="gorscheneow2018@yandex.ru")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.getenv(
+    "DEFAULT_FROM_EMAIL", default="gorscheneow2018@yandex.ru"
+)
+```
+
 ```
 MEDIA_URL = '/media/'
 
@@ -198,9 +220,84 @@ students = Student.objects.all()
 ```
 python -Xutf8 manage.py dumpdata [app_label].[model_name] --output file.json --indent 4
 ```
-#### Заполнение с использованием json
+
+
+# Кастомные пользователи
+Настройки в setings
+```
+AUTH_USER_MODEL = "users.BaseUser"
+LOGIN_REDIRECT_URL = "catalog:home"
+LOGOUT_REDIRECT_URL = "users:login"
 ```
 
 ```
+LOGIN_URL = "users:login"
+```
 
 
+# Получение и отправка сообщений по почте
+Настройки в setings
+```
+EMAIL_BACKEND = os.getenv("EMAIL_BACKEND")
+EMAIL_HOST = os.getenv("EMAIL_HOST", default="smtp.yandex.ru")
+EMAIL_PORT = os.getenv("EMAIL_PORT", default="465")
+EMAIL_USE_TLS = True if os.getenv("EMAIL_USE_TLS") == "True" else False
+EMAIL_USE_SSL = True if os.getenv("EMAIL_USE_SSL") == "True" else False
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER", default="gorscheneow2018@yandex.ru")
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.getenv(
+    "DEFAULT_FROM_EMAIL", default="gorscheneow2018@yandex.ru"
+)
+```
+
+
+# Настройка базы данных
+Настройки в setings
+```
+DATABASES = {
+    "default": {
+        "ENGINE": "django.db.backends.postgresql_psycopg2",
+        "PORT": os.getenv("DATABASE_PORT", default="5432"),
+        "NAME": os.getenv("DATABASE_NAME", default="postgres"),
+        "USER": os.getenv("DATABASE_USER", default="postgres"),
+        "HOST": os.getenv("DATABASE_HOST", default="localhost"),
+        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
+    }
+}
+```
+
+
+# Настройка кеширования
+Настройки в setings
+```
+CACHES = {
+    "default": {
+        "BACKEND": os.getenv(
+            "BACKEND", default="django.core.cache.backends.redis.RedisCache"
+        ),
+        "LOCATION": os.getenv("LOCATION", default="redis://127.0.0.1:6379/1"),
+    }
+}
+```
+
+
+# Пример .env
+SECRET_KEY="django-insecure-kw&o6na0bg6=!=deyi%q$+#9my14*wr45h#v8f_cifxje23*tf"
+
+DEBUG=True
+
+DATABASE_PORT=5432
+DATABASE_NAME=postgres
+DATABASE_USER=postgres
+DATABASE_HOST=localhost
+DATABASE_PASSWORD=pi
+
+WORDS_PROHIBITED=казино.криптовалюта.крипта.биржа.дешево.бесплатно.обман.полиция.радар
+
+EMAIL_BACKEND=django.core.mail.backends.smtp.EmailBackend
+EMAIL_HOST=smtp.yandex.ru
+EMAIL_PORT=465
+EMAIL_USE_TLS=False
+EMAIL_USE_SSL=True
+EMAIL_HOST_USER=gorscheneow2018@yandex.ru
+EMAIL_HOST_PASSWORD=lhubxvbwpplacfwz
